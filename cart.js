@@ -5,7 +5,6 @@ const cartCountEl = document.getElementById("cart-count");
 const checkoutButton = document.getElementById("checkout");
 const loader = document.getElementById("loader");
 
-
 const checkoutPopup = document.createElement("div");
 checkoutPopup.id = "checkout-popup";
 checkoutPopup.style.cssText = `
@@ -28,7 +27,6 @@ const apiUrl = "https://cdn.shopify.com/s/files/1/0883/2188/4479/files/apiCartDa
 
 let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
-
 async function fetchCartData() {
   try {
     loader.style.display = "block";
@@ -48,7 +46,6 @@ async function fetchCartData() {
   }
 }
 
-
 function renderCart() {
   Listcart.innerHTML = "";
   let subtotal = 0;
@@ -64,7 +61,7 @@ function renderCart() {
       <td>₹${(item.price / 100).toFixed(2)}</td>
       <td><input type="number" min="1" value="${item.quantity}" data-id="${item.id}" class="quantity"></td>
       <td class="line-price" data-id="${item.id}">₹${((item.price * item.quantity) / 100).toFixed(2)}</td>
-      <td><button data-id="${item.id}" class="remove-item" >🗑️</button></td>
+      <td><button data-id="${item.id}" class="remove-item">🗑️</button></td>
     `;
     Listcart.appendChild(row);
   });
@@ -73,11 +70,10 @@ function renderCart() {
   totalEl.textContent = `₹${(subtotal / 100).toFixed(2)}`;
   cartCountEl.textContent = totalQuantity;
 
-  
   document.querySelectorAll(".quantity").forEach(input => {
-    input.addEventListener("change", event => {
+    const handleQuantityChange = event => {
       const id = event.target.dataset.id;
-      const updatedQuantity = Math.max(1, parseInt(event.target.value));
+      const updatedQuantity = Math.max(1, parseInt(event.target.value) || 1);
       const item = cartData.find(item => item.id == id);
 
       if (item) {
@@ -87,15 +83,16 @@ function renderCart() {
 
       localStorage.setItem("cartData", JSON.stringify(cartData));
       renderCart();
-    });
+    };
+
+    input.addEventListener("input", handleQuantityChange);
+    input.addEventListener("change", handleQuantityChange);
   });
 
-  
   document.querySelectorAll(".remove-item").forEach(button => {
     button.addEventListener("click", event => {
       const id = event.target.dataset.id;
 
-      
       const modal = document.createElement("div");
       modal.id = "confirmation-modal";
       modal.style.cssText = `
@@ -119,7 +116,6 @@ function renderCart() {
 
       document.body.appendChild(modal);
 
-      
       document.getElementById("confirm-remove").addEventListener("click", () => {
         cartData = cartData.filter(item => item.id != id);
         localStorage.setItem("cartData", JSON.stringify(cartData));
@@ -127,14 +123,12 @@ function renderCart() {
         document.body.removeChild(modal);
       });
 
-      
       document.getElementById("cancel-remove").addEventListener("click", () => {
         document.body.removeChild(modal);
       });
     });
   });
 }
-
 
 checkoutButton.addEventListener("click", () => {
   const totalAmount = totalEl.textContent;
@@ -154,12 +148,10 @@ checkoutButton.addEventListener("click", () => {
 
   checkoutPopup.style.display = "block";
 
-  
   document.getElementById("close-popup").addEventListener("click", () => {
     checkoutPopup.style.display = "none";
   });
 
-  
   document.getElementById("confirm-checkout").addEventListener("click", () => {
     alert("Checkout confirmed. Thank you for your purchase!");
     cartData = [];
@@ -169,10 +161,8 @@ checkoutButton.addEventListener("click", () => {
   });
 });
 
-
 if (cartData.length === 0) {
   fetchCartData();
 } else {
   renderCart();
 }
-
