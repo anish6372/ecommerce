@@ -3,33 +3,20 @@ const subtotalEl = document.getElementById("subtotal");
 const totalEl = document.getElementById("total");
 const cartCountEl = document.getElementById("cart-count");
 const checkoutButton = document.getElementById("checkout");
-const loader = document.getElementById("loader");
 
-const checkoutPopup = document.createElement("div");
-checkoutPopup.id = "checkout-popup";
-checkoutPopup.style.cssText = `
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: none;
-  animation: fadeIn 0.5s ease-in-out;
-  z-index: 1000;
-  text-align: center;
-`;
-document.body.appendChild(checkoutPopup);
+
 
 const apiUrl = "https://cdn.shopify.com/s/files/1/0883/2188/4479/files/apiCartData.json?v=1728384889";
 
 let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
+
+
+
+
 async function fetchCartData() {
   try {
-    loader.style.display = "block";
+    
     const response = await fetch(apiUrl);
 
     if (!response.ok) throw new Error("Failed to fetch cart data");
@@ -45,6 +32,25 @@ async function fetchCartData() {
     loader.style.display = "none";
   }
 }
+
+
+const checkoutPopup = document.createElement("div");
+
+checkoutPopup.style.cssText = `
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+  z-index: 1000;
+  text-align: center;
+`;
+document.body.appendChild(checkoutPopup);
 
 function renderCart() {
   Listcart.innerHTML = "";
@@ -72,26 +78,29 @@ function renderCart() {
 
   document.querySelectorAll(".quantity").forEach(input => {
     const handleQuantityChange = event => {
-      const id = event.target.dataset.id;
-      const updatedQuantity = Math.max(1, parseInt(event.target.value) || 1);
+      const id = event.target.getAttribute('data-id');
+      let updatedQuantity = Math.floor(event.target.value) || 1; 
+      if (updatedQuantity < 1) updatedQuantity = 1; 
+  
       const item = cartData.find(item => item.id == id);
-
+  
       if (item) {
         item.quantity = updatedQuantity;
-        item.line_price = item.price * updatedQuantity; 
+        item.line_price = item.price * updatedQuantity;
       }
-
+  
       localStorage.setItem("cartData", JSON.stringify(cartData));
       renderCart();
     };
-
+  
     input.addEventListener("input", handleQuantityChange);
     input.addEventListener("change", handleQuantityChange);
   });
+  
 
   document.querySelectorAll(".remove-item").forEach(button => {
     button.addEventListener("click", event => {
-      const id = event.target.dataset.id;
+      const id = event.target.getAttribute('data-id');
 
       const modal = document.createElement("div");
       modal.id = "confirmation-modal";
@@ -134,10 +143,7 @@ checkoutButton.addEventListener("click", () => {
   const totalAmount = totalEl.textContent;
   const totalItems = cartCountEl.textContent;
 
-  if (cartData.length === 0) {
-    alert("Your cart is empty. Add items to proceed to checkout.");
-    return;
-  }
+ 
 
   checkoutPopup.innerHTML = `
     <h2>Thank You!</h2>
