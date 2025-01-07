@@ -28,9 +28,7 @@ async function fetchCartData() {
   } catch (error) {
     console.error("Error fetching cart data:", error);
     alert("Failed to load cart data. Please try again later.");
-  } finally {
-    loader.style.display = "none";
-  }
+  } 
 }
 
 
