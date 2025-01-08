@@ -139,8 +139,8 @@ checkoutButton.addEventListener("click", () => {
  
   document.getElementById("close-checkout").addEventListener("click", () => {
     
-    cartData = [];
-    localStorage.removeItem("cartData");
+    
+    
     renderCart();
 
     
