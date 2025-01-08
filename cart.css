@@ -29,6 +29,7 @@ body {
   align-items: center; 
   gap: 0.5rem; 
 }
+
 .header-image {
   position: relative; 
   width: 100%;
@@ -38,10 +39,10 @@ body {
   margin: 0 auto;
 }
 
-.text{
-  font-size:11px;
-  color:#000;
-  font:bold;
+.text {
+  font-size: 11px;
+  color: #000;
+  font: bold;
 }
 
 .header-overlay {
@@ -53,32 +54,23 @@ body {
   color: #fff; 
 }
 
-
-
-
-
 .header-title {
   font-size: 1.5rem; 
   font-weight: bold;
-  
-  color:#000000;
+  color: #000000;
 }
-
 
 .logo img {
   width: 40px; 
   height: auto; 
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .logo span {
   font-size: 1.5rem; 
   font-weight: bold;
   color: #333;
-  
 }
-
-
 
 .nav-links {
   list-style: none;
@@ -95,7 +87,8 @@ body {
 .nav-icons {
   display: flex;
   align-items: center;
-  gap: 1.5rem; }
+  gap: 1.5rem; 
+}
 
 .nav-icons i {
   font-size: 1.2rem;
@@ -131,12 +124,15 @@ body {
 
 .cart-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
   padding: 2rem;
   margin-top: 30px;
-  flex-wrap: wrap;
-  height:390px;
+  
+}
+.cart-totals >.total >.subtotal{
+ margin-bottom:10px !important;
 }
 
 .cart-items {
@@ -155,7 +151,6 @@ body {
   color: #333;
   text-align: left;
   padding: 0.75rem;
-  
   font-weight: 600;
 }
 
@@ -202,7 +197,7 @@ body {
 }
 
 .cart-totals button {
-  width: 100%;
+  width: 105px;
   padding: 0.75rem;
   background-color: #F9F1E7;
   color: #000;
@@ -210,9 +205,8 @@ body {
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  margin-top:100px;
-  width:105px;
-  margin-left:120px;
+  margin-top: 70px;
+  margin-left:100px;
 }
 
 .footer {
@@ -233,6 +227,9 @@ body {
 .footer-icons p {
   margin-top: 2px;
 }
+.subtotal{
+  margin-top:100px !important;
+}
 
 @media (max-width: 768px) {
   .container {
@@ -247,5 +244,25 @@ body {
 
   .nav-icons {
     margin-top: 1rem;
+  }
+
+  .cart-container {
+    flex-direction: column; 
+    padding: 1rem;
+    gap: 1rem;
+   
+  }
+
+  .cart-items {
+    width: 100%; 
+  }
+
+  .cart-totals {
+    width: 105px; 
+    margin-top: 1rem; 
+  }
+
+  .footer {
+    margin-top: 2rem; 
   }
 }
