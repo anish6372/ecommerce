@@ -46,9 +46,9 @@ function renderCart() {
   cartCountEl.textContent = totalQuantity;
 
   document.querySelectorAll(".quantity").forEach(input => {
-    input.addEventListener("input", event => {
-      const id = event.target.getAttribute('data-id');
-      let updatedQuantity = Math.floor(event.target.value) || 1;
+    input.addEventListener("input", e => {
+      const id = e.target.getAttribute('data-id');
+      let updatedQuantity = Math.floor(e.target.value) || 1;
       if (updatedQuantity < 1) updatedQuantity = 1;
 
       const item = cartData.find(item => item.id == id);
@@ -63,14 +63,13 @@ function renderCart() {
   });
 
   document.querySelectorAll(".remove-item").forEach(button => {
-    button.addEventListener("click", event => removeItem(event));
+    button.addEventListener("click", e => removeItem(e));
   });
 }
 
-function removeItem(event) {
-  const id = event.target.getAttribute("data-id");
-
- 
+function removeItem(e) {
+  const id = e.target.getAttribute("data-id");
+  
   const modal = document.createElement("div");
   modal.id = "confirmation-modal";
   modal.style.cssText = `
