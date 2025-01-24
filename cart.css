@@ -237,14 +237,17 @@ body {
   }
 
   .container {
-    flex-direction: column;
+    flex-direction: row;
     padding: 0; 
-    width: 130vw; 
+    width: 150vw; 
     box-sizing: border-box; 
+  }
+  .header{
+    width:150vw;
   }
 
   .header-image {
-    width: 130vw; 
+    width: 150vw; 
     height: 316px; 
     margin: 0;
     padding: 0; 
@@ -261,13 +264,14 @@ body {
   .footer {
     margin: 0; 
     padding: 1rem 0; 
-    width: 130vw; 
+    width: 150vw; 
     box-sizing: border-box;
   }
 
   .nav-links {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    gap:10px;
     width: 100%; 
   }
 
